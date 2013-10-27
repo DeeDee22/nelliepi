@@ -3,14 +3,17 @@ Created on Oct 4, 2013
 
 @author: geraldine
 '''
-import pygame, sys
+import pygame
 from pygame.locals import *
 from ch.fluxkompensator.nelliepi.Constants import RESOLUTION
 from ch.fluxkompensator.nelliepi.ui.screen.StartScreen import StartScreen
 from ch.fluxkompensator.nelliepi.ui.state import UiState
 from ch.fluxkompensator.nelliepi.ui.controller import ButtonCollisionDetector
 from ch.fluxkompensator.nelliepi.ui.screen.MusicScreen import MusicScreen
+from ch.fluxkompensator.nelliepi.music import Player
+from ch.fluxkompensator.nelliepi import Quitter
 
+    
 if __name__ == '__main__':
     pygame.init()
 
@@ -27,12 +30,13 @@ if __name__ == '__main__':
     
     print(UiState.toString())
     
+    Player.play()
+    
     # run the game loop
     while running:
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+                Quitter.quit_nelliepi()
                 running = False 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                     #print("Pos: %sx%s\n" % pygame.mouse.get_pos())

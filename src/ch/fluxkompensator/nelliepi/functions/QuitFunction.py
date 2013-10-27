@@ -3,9 +3,7 @@ Created on Oct 5, 2013
 
 @author: geraldine
 '''
-import pygame
-import sys
+from ch.fluxkompensator.nelliepi import Quitter
 
 def function(*args):
-    pygame.quit()
-    sys.exit()
+    Quitter.quit_nelliepi()
