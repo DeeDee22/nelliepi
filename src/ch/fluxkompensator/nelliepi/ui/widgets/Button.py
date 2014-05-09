@@ -37,3 +37,7 @@ class Button(object):
     
     def getName(self):
         return self.name
+    
+    def setMethod(self, pMethod, pParams=None):
+        self.method = pMethod
+        self.params = pParams

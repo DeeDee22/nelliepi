@@ -12,7 +12,7 @@ class TextButton(Button):
     classdocs
     '''
 
-    def __init__(self, pX, pY, pText, pMethod=None, pName=None, pParams=None):
+    def __init__(self, pX, pY, pText, pColor=BLACK, pFontSize=36, pMethod=None, pName=None, pParams=None):
         '''
         Constructor
         '''
@@ -21,8 +21,12 @@ class TextButton(Button):
         else:
             name = pName
         Button.__init__(self, pX, pY, pName=name, pMethod=pMethod, pParams=pParams)
-        font = pygame.font.Font(None, 36)
-        self.text = font.render(pText, 1, (BLACK))
+        font = pygame.font.Font(None, pFontSize)
+        self.text = font.render(pText, 1, (pColor))
+        
+    def setText(self, pText, pColor=BLACK, pFontSize=36):
+        font = pygame.font.Font(None, pFontSize)
+        self.text = font.render(pText, 1, (pColor))
         
      
     def getPosition(self):

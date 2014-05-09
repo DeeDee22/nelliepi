@@ -13,6 +13,9 @@ class Screen(object):
     '''
     def getSurface(self):
         return self.background
+    
+    def clear(self):
+        self.background.fill(WHITE)
 
     def __init__(self, pName):
         '''
