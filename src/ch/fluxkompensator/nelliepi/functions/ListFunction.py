@@ -12,12 +12,19 @@ def function(*args):
         raise ValueError("screen not found listScreen")
     else:
         startIndex=0
-        if(len(args) > 0):
-            startIndex=args[0]
-        print("start index passed to screen was " + str(startIndex))
-                #clear screen first
+        fileList = None
+        parentDirectory = None
+        
+        if len(args) > 0:
+            fileList=args[0]
+        if len(args) > 1:
+            startIndex = args[1]
+        if (len(args) > 2):
+            parentDirectory = args[2]
+
+        #clear screen first
         screen.clear()
         UiState.removeScreen(screen)
         screen.__init__()
-        screen.setDirectoryToList(Player.listFiles(), pStartIndex=startIndex)
+        screen.setDirectoryToList(fileList, pStartIndex=startIndex, pParentDirectory=parentDirectory)
         UiState.setScreen(screen)

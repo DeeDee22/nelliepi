@@ -8,13 +8,18 @@ from ch.fluxkompensator.nelliepi.ui.widgets.TextButton import TextButton
 from ch.fluxkompensator.nelliepi.Constants import RED
 from ch.fluxkompensator.nelliepi.Constants import BLUE
 from ch.fluxkompensator.nelliepi.functions import ListFunction
-from ch.fluxkompensator.nelliepi.ui.state import UiState
+from ch.fluxkompensator.nelliepi.functions import PlayFunction
+from ch.fluxkompensator.nelliepi.music import Player
+
 
 class ListScreen(ScreenWithFooter):
     '''
     classdocs
     '''
     fileList = None
+    directoryName = None
+    level = 0
+    parentDirectory = None
     PADDING = 5
     NUMBER_OF_POSSIBLE_ROWS = 8
 
@@ -24,10 +29,13 @@ class ListScreen(ScreenWithFooter):
         '''
         ScreenWithFooter.__init__(self, "listScreen")
        
-    def setDirectoryToList(self, pFileList, pStartIndex=0):
+    def setDirectoryToList(self, pDirectoryToList, pStartIndex=0, pParentDirectory=None):
         print("start index is " + str(pStartIndex))
         
-        self.fileList = pFileList
+        self.parentDirectory = pParentDirectory
+        self.directoryName = pDirectoryToList
+        self.fileList = self.getFileList(pDirectoryToList)
+        
         fontSize=self.getFontSize(self.getMaxHeight(), len(self.fileList))
         self.addPrevButton(pStartIndex)
         i = 0
@@ -36,14 +44,14 @@ class ListScreen(ScreenWithFooter):
         for currentFile in self.fileList:
             if i >= pStartIndex and i <= maxIndex:
                 if currentFile.has_key("directory"):
-                    directoryName = currentFile["directory"]
+                    directoryName = self.extractFileName(currentFile["directory"])
                     #print("directory: " + directoryName)
-                    button = TextButton(self.getMaxWidth() / 2, self.getHeightForButton(self.getMaxHeight(), len(self.fileList), i, pStartIndex), directoryName, pColor=RED, pFontSize=fontSize)
+                    button = TextButton(self.getMaxWidth() / 2, self.getHeightForButton(self.getMaxHeight(), len(self.fileList), i, pStartIndex), directoryName, pColor=RED, pFontSize=fontSize, pMethod=ListFunction.function, pParams=[currentFile["directory"], 0, currentFile["directory"]])
                     self.addButton(button)
                 elif currentFile.has_key("file"):
                     fileName = self.extractFileName(currentFile["file"])
                     #print("file: " + fileName)
-                    button = TextButton(self.getMaxWidth() / 2, self.getHeightForButton(self.getMaxHeight(), len(self.fileList), i, pStartIndex), fileName, pFontSize=fontSize)
+                    button = TextButton(self.getMaxWidth() / 2, self.getHeightForButton(self.getMaxHeight(), len(self.fileList), i, pStartIndex), fileName, pFontSize=fontSize, pMethod=PlayFunction.function, pParams=[currentFile["file"]])
                     self.addButton(button)
             i=i+1
         self.addNextButton(pStartIndex, maxIndex)
@@ -94,7 +102,7 @@ class ListScreen(ScreenWithFooter):
                     nextStartIndex = 0
                 print("next start index for PrevButton: " + str(nextStartIndex))
                 fontSize=self.getFontSize(self.getMaxHeight(), len(self.fileList))
-                button = TextButton(self.getMaxWidth() / 2, self.getHeightForPrevElemetn(self.getMaxHeight(), len(self.fileList)), "<previous>", pColor=BLUE, pFontSize=fontSize, pMethod=ListFunction.function, pParams=[nextStartIndex ,])
+                button = TextButton(self.getMaxWidth() / 2, self.getHeightForPrevElemetn(self.getMaxHeight(), len(self.fileList)), "<previous>", pColor=BLUE, pFontSize=fontSize, pMethod=ListFunction.function, pParams=[self.directoryName, nextStartIndex, self.parentDirectory])
                 self.addButton(button)
                     
     def addNextButton(self, pStartIndex,pMaxIndex):
@@ -102,6 +110,31 @@ class ListScreen(ScreenWithFooter):
             nextStartIndex=pMaxIndex + 1
             print("next start index forNextButton: " + str(nextStartIndex))
             fontSize=self.getFontSize(self.getMaxHeight(), len(self.fileList))
-            button = TextButton(self.getMaxWidth() / 2, self.getHeightForButton(self.getMaxHeight(), len(self.fileList),pMaxIndex +1, pStartIndex), "<next>", pColor=BLUE, pFontSize=fontSize, pMethod=ListFunction.function, pParams=[nextStartIndex,])
+            button = TextButton(self.getMaxWidth() / 2, self.getHeightForButton(self.getMaxHeight(), len(self.fileList),pMaxIndex +1, pStartIndex), "<next>", pColor=BLUE, pFontSize=fontSize, pMethod=ListFunction.function, pParams=[self.directoryName, nextStartIndex, self.parentDirectory])
             self.addButton(button)
                    
+    def getFileList(self, pDirectoryName):
+            wholeList = Player.listFiles(pDirectoryName)
+            result = []
+            for currentFile in wholeList:
+                    fileName = None
+                    if(currentFile.has_key("directory")):
+                        fileName=currentFile["directory"]
+                    else:
+                        fileName=currentFile["file"]
+                    if self.isDirectlyInDirectory(fileName):
+                        result.append(currentFile);
+            
+            return result
+        
+    def isDirectlyInDirectory(self, fileName):
+        level = 0
+        if not self.parentDirectory is None:
+            level=self.parentDirectory.count("/") + 1
+        occurences = fileName.count("/")
+        
+        parentDirString = "None"
+        if not self.parentDirectory is None:
+            parentDirString = self.parentDirectory
+        print("parent: " + parentDirString + " fileName:" + fileName + " occurences: " + str(occurences) + " level: " + str(level))
+        return occurences == level

@@ -4,24 +4,29 @@ Created on Oct 4, 2013
 @author: geraldine
 '''
 from mpd import MPDClient
-import logging
-#from apt.progress import old
 
 client = MPDClient()
 oldVolume = None
 
 def init():
-   # logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
     client.timeout = 10                # network timeout in seconds (floats allowed), default: None
     client.idletimeout = None          # timeout for fetching the result of the idle command is handled seperately, default: None
     client.connect("localhost", 6600)  # connect to localhost:6600
-    print(client.listall())  
     
-def listFiles():
-    return client.listall()
+def listFiles(pDirectoryName=None):
+    if pDirectoryName is None :
+        return client.listall()
+    else:
+        return client.listall(pDirectoryName)
 
-def play():
-    client.play()
+def play(pSong=None):
+    if pSong is None:
+        client.play()
+    else :
+        client.clear()
+        client.add(pSong)
+        client.play()
 
 def stop():
     client.stop()    
