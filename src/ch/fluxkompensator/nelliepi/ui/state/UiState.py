@@ -35,13 +35,18 @@ def setScreen(pScreen):
 
 def addButton(pButton, pScreen): 
     global buttons
-    global buttons
     if screens is None or not pScreen in screens:
         raise ValueError("The screen you are trying to add the button to does not exist.")
     if buttons is None:
         buttons = [(pButton, pScreen),]
     else:
         buttons.append((pButton, pScreen))
+
+def removeButton(pButton, pScreen):
+    if screens is None or not pScreen in screens:
+        print("WARNING: The screen you are trying to remove the button from does not exist " + pButton.getName() + " " + pScreen.getName())
+    buttons.remove((pButton, pScreen)) 
+        
             
 def addScreen(pScreen):
     global screens
@@ -50,6 +55,22 @@ def addScreen(pScreen):
     else:
         screens.append(pScreen)
         
+def removeScreen(pScreen):
+    if screens is None:
+        return
+    else :
+        buttonScreenTuplesToRemove = None
+        for buttonScreenTuple in buttons:
+            if buttonScreenTuple[1] == pScreen:
+                if buttonScreenTuplesToRemove is None:
+                    buttonScreenTuplesToRemove = [buttonScreenTuple,]
+                else :
+                    buttonScreenTuplesToRemove.append(buttonScreenTuple)
+        if not buttonScreenTuplesToRemove is None :
+            for currentTupleToRemove in buttonScreenTuplesToRemove:
+                buttons.remove(currentTupleToRemove)
+        screens.remove(pScreen)
+    
 def getButtonsForScreen(pScreen):
     result = []
     for button in buttons:

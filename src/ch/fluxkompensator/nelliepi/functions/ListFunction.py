@@ -14,5 +14,10 @@ def function(*args):
         startIndex=0
         if(len(args) > 0):
             startIndex=args[0]
+        print("start index passed to screen was " + str(startIndex))
+                #clear screen first
+        screen.clear()
+        UiState.removeScreen(screen)
+        screen.__init__()
         screen.setDirectoryToList(Player.listFiles(), pStartIndex=startIndex)
         UiState.setScreen(screen)
