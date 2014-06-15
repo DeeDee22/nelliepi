@@ -14,6 +14,7 @@ from ch.fluxkompensator.nelliepi.ui.screen.ListScreen import ListScreen
 from ch.fluxkompensator.nelliepi.music import Player
 from ch.fluxkompensator.nelliepi import Quitter
 from evdev import InputDevice, list_devices
+from signal import alarm, signal, SIGALRM, SIGKILL
     
 if __name__ == '__main__':
     
@@ -30,8 +31,20 @@ if __name__ == '__main__':
         os.environ["SDL_MOUSEDEV"] = eventX
 
 
-    
-    pygame.init()
+       # this section is an unbelievable nasty hack - for some reason Pygame
+    # needs a keyboardinterrupt to initialise in some limited circs (second time running)
+    class Alarm(Exception):
+        pass
+    def alarm_handler(signum, frame):
+        raise Alarm
+    signal(SIGALRM, alarm_handler)
+    alarm(3)
+    try:
+        pygame.init()
+        pygameScreen = pygame.display.set_mode(RESOLUTION, 0, 32)
+        alarm(0)
+    except Alarm:
+        raise KeyboardInterrupt
 
   #  pygame.display.init()
    # pygame.mixer.init()
@@ -40,7 +53,6 @@ if __name__ == '__main__':
     #pygame.font.init()
 
     # set up the window
-    pygameScreen = pygame.display.set_mode(RESOLUTION, 0, 32)
     UiState.pygameScreen = pygameScreen
     
     #set up the music player
