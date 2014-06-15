@@ -14,7 +14,7 @@ from ch.fluxkompensator.nelliepi.ui.screen.ListScreen import ListScreen
 from ch.fluxkompensator.nelliepi.music import Player
 from ch.fluxkompensator.nelliepi import Quitter
 from evdev import InputDevice, list_devices
-from signal import alarm, signal, SIGALRM, SIGKILL
+from signal import alarm, signal, SIGALRM
     
 if __name__ == '__main__':
     
