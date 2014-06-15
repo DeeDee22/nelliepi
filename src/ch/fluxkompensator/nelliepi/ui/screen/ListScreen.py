@@ -184,11 +184,11 @@ class ListScreen(ScreenWithFooter):
             
         occurences = fileName.count("/")
         
-        print("=====")
-        parentDirString = "None"
-        if not self.parentDirectories is None:
-            for currentParent in self.parentDirectories:
-                parentDirString = parentDirString + currentParent + ","
-        print("parent: " + parentDirString + " fileName:" + fileName + " occurences: " + str(occurences) + " level: " + str(level))
-        print("=====")
+        #print("=====")
+        #parentDirString = "None"
+        #if not self.parentDirectories is None:
+        #    for currentParent in self.parentDirectories:
+        #        parentDirString = parentDirString + currentParent + ","
+        #print("parent: " + parentDirString + " fileName:" + fileName + " occurences: " + str(occurences) + " level: " + str(level))
+        #print("=====")
         return occurences == level
