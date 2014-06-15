@@ -29,13 +29,13 @@ if __name__ == '__main__':
         os.environ["SDL_MOUSEDRV"] = "TSLIB"
 
     
-#     pygame.init()
+    pygame.init()
 
-    pygame.display.init()
+  #  pygame.display.init()
    # pygame.mixer.init()
-    pygame.joystick.init()
-    pygame.cdrom.init()
-    pygame.font.init()
+   # pygame.joystick.init()
+    #pygame.cdrom.init()
+    #pygame.font.init()
 
     # set up the window
     pygameScreen = pygame.display.set_mode(RESOLUTION, 0, 32)
