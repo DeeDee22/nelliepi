@@ -38,6 +38,8 @@ if __name__ == '__main__':
     listScreen = ListScreen()
    
     UiState.setScreen(startScreen)
+    
+    Player.play(None)
 
     running = True
     
