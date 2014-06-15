@@ -3,7 +3,7 @@ Created on Oct 4, 2013
 
 @author: geraldine
 '''
-import pygame
+import pygame, os, sys
 from pygame.locals import *
 from ch.fluxkompensator.nelliepi.Constants import RESOLUTION
 from ch.fluxkompensator.nelliepi.ui.screen.StartScreen import StartScreen
@@ -13,9 +13,22 @@ from ch.fluxkompensator.nelliepi.ui.screen.MusicScreen import MusicScreen
 from ch.fluxkompensator.nelliepi.ui.screen.ListScreen import ListScreen
 from ch.fluxkompensator.nelliepi.music import Player
 from ch.fluxkompensator.nelliepi import Quitter
-
+from evdev import InputDevice, list_devices
     
 if __name__ == '__main__':
+    
+    if(len(sys.argv) > 1 and sys.argv[1] == "ON_PI"):
+        devices = map(InputDevice, list_devices())
+        eventX=""
+        for dev in devices:
+            if dev.name == "ADS7846 Touchscreen":
+                eventX = dev.fn
+        print eventX
+
+        os.environ["SDL_FBDEV"] = "/dev/fb1"
+        os.environ["SDL_MOUSEDRV"] = "TSLIB"
+
+    
 #     pygame.init()
 
     pygame.display.init()
