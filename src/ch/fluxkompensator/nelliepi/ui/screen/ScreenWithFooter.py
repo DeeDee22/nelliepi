@@ -9,8 +9,7 @@ import pygame
 from ch.fluxkompensator.nelliepi.Constants import BLACK
 from ch.fluxkompensator.nelliepi.Constants import WHITE
 from ch.fluxkompensator.nelliepi.functions import GoToHomeScreenFunction,\
-    GoToLastScreenFunction, QuitFunction, MuteFunction, UnmuteFunction,\
-    MuteUnmuteFunction
+    GoToLastScreenFunction, QuitFunction, PauseFunction
 
 class ScreenWithFooter(Screen):
     '''
@@ -27,11 +26,11 @@ class ScreenWithFooter(Screen):
         homeButton = TextButton(50, 220, "Home", pMethod=GoToHomeScreenFunction.function)
         self.addButton(homeButton)
 
-        backButton = TextButton(130, 220, "Back", pMethod=GoToLastScreenFunction.function)
-        self.addButton(backButton)
+        #backButton = TextButton(130, 220, "Back", pMethod=GoToLastScreenFunction.function)
+        #self.addButton(backButton)
         
-        muteButton = TextButton(200, 220, "Mute")
-        muteButton.setMethod(MuteUnmuteFunction.function, pParams=[muteButton, MuteFunction.function, UnmuteFunction.function, "Mute", "Unmute"])
+        muteButton = TextButton(165, 220, "Pause")
+        muteButton.setMethod(PauseFunction.function)
         self.addButton(muteButton)
 
         quitButton = TextButton(270, 220, "Quit", pMethod=QuitFunction.function)
@@ -44,11 +43,11 @@ class ScreenWithFooter(Screen):
         homeButton = TextButton(50, 220, "Home", pMethod=GoToHomeScreenFunction.function)
         self.addButton(homeButton)
 
-        backButton = TextButton(130, 220, "Back", pMethod=GoToLastScreenFunction.function)
-        self.addButton(backButton)
+        #backButton = TextButton(130, 220, "Back", pMethod=GoToLastScreenFunction.function)
+        #self.addButton(backButton)
         
-        muteButton = TextButton(200, 220, "Mute")
-        muteButton.setMethod(MuteUnmuteFunction.function, pParams=[muteButton, MuteFunction.function, UnmuteFunction.function, "Mute", "Unmute"])
+        muteButton = TextButton(150, 220, "Pause")
+        muteButton.setMethod(PauseFunction.function)
         self.addButton(muteButton)
 
         quitButton = TextButton(270, 220, "Quit", pMethod=QuitFunction.function)

@@ -23,7 +23,7 @@ class MusicScreen(ScreenWithFooter):
         playButton = TextButton(self.getMaxWidth() / 2, self.getMaxHeight() / 4, "Play", pMethod=PlayFunction.function)
         self.addButton(playButton)
 
-        listButton = TextButton(self.getMaxWidth() / 2, self.getMaxHeight() / 4 * 2, "List Files", pMethod=ListFunction.function)
+        listButton = TextButton(self.getMaxWidth() / 2, self.getMaxHeight() / 4 * 2, "List Files", pMethod=ListFunction.function, pParams=["_main_", 0, None])
         self.addButton(listButton)
         
         stopButton = TextButton(self.getMaxWidth() / 2, self.getMaxHeight() / 4 * 3, "Stop", pMethod=StopFunction.function)

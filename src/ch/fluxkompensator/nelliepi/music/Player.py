@@ -43,7 +43,7 @@ def mute():
     
 def unmute():
     print("unmuting once i found out how")
-  #  client.setvol(oldVolume)
+    #  client.setvol(oldVolume)
     
 def dispose():        
     client.close()                     # send the close command

@@ -13,18 +13,18 @@ def function(*args):
     else:
         startIndex=0
         fileList = None
-        parentDirectory = None
+        parentDirectories = None
         
         if len(args) > 0:
             fileList=args[0]
         if len(args) > 1:
             startIndex = args[1]
         if (len(args) > 2):
-            parentDirectory = args[2]
+            parentDirectories = args[2]
 
         #clear screen first
         screen.clear()
         UiState.removeScreen(screen)
         screen.__init__()
-        screen.setDirectoryToList(fileList, pStartIndex=startIndex, pParentDirectory=parentDirectory)
+        screen.setDirectoryToList(fileList, pStartIndex=startIndex, pParentDirectories=parentDirectories)
         UiState.setScreen(screen)
