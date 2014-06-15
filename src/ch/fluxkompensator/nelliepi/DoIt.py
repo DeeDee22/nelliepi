@@ -27,6 +27,8 @@ if __name__ == '__main__':
 
         os.environ["SDL_FBDEV"] = "/dev/fb1"
         os.environ["SDL_MOUSEDRV"] = "TSLIB"
+        os.environ["SDL_MOUSEDEV"] = eventX
+
 
     
     pygame.init()
