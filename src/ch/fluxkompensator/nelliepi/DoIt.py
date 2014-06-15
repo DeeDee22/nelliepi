@@ -54,8 +54,6 @@ if __name__ == '__main__':
    
     UiState.setScreen(startScreen)
     
-    Player.play(None)
-
     running = True
     
     print(UiState.toString())
